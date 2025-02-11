@@ -38,4 +38,19 @@
     <style name="AppThemeProgressStyle">
         <item name="colorAccent">@color/mp_color_primary_variant</item>
     </style>
+
+    <!-- Custom style for the buttons -->
+    <style name="CustomButton">
+        <item name="android:background">@drawable/button_background</item> <!-- Custom background for opacity and border -->
+        <item name="android:layout_width">0dp</item> <!-- Ensure they take equal space -->
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_rowWeight">1</item> <!-- Button fills grid cell equally -->
+        <item name="android:layout_columnWeight">1</item> <!-- Button fills grid cell equally -->
+        <item name="android:textColor">#FFFFFF</item> <!-- Text color -->
+        <item name="android:textSize">16sp</item> <!-- Text size -->
+        <item name="android:padding">16dp</item> <!-- Padding inside button -->
+        <item name="android:layout_margin">8dp</item> <!-- Margin around button -->
+        <item name="android:drawablePadding">8dp</item> <!-- Space between image and text -->
+        <item name="android:elevation">4dp</item> <!-- Elevation for shadow effect -->
+    </style>
 </resources>

@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "112108052248",
+    "firebase_url": "https://distracted-driving-detec-a08c7-default-rtdb.firebaseio.com",
+    "project_id": "distracted-driving-detec-a08c7",
+    "storage_bucket": "distracted-driving-detec-a08c7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:112108052248:android:84913963ea60248fe2486d",
+        "android_client_info": {
+          "package_name": "com.example.distracted_driver_detection"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDii4nHeDQnsVieYstHPdF2hR4-YeN_ppU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:112108052248:android:ec8ae55037db02c6e2486d",
+        "android_client_info": {
+          "package_name": "com.google.mediapipe.examples.facelandmarker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDii4nHeDQnsVieYstHPdF2hR4-YeN_ppU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

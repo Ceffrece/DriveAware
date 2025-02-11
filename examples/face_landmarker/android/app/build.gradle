@@ -17,6 +17,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'de.undercouch.download'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -40,11 +41,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '11'
     }
     buildFeatures {
         viewBinding true
@@ -60,11 +61,16 @@ dependencies {
     // Kotlin lang
     implementation 'androidx.core:core-ktx:1.8.0'
 
+    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.7.10'
+
     // App compat and UI things
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.fragment:fragment-ktx:1.5.4'
+    implementation 'com.google.firebase:firebase-database-ktx:21.0.0'
+    implementation 'com.google.firebase:firebase-auth-ktx:22.3.1'
+    implementation 'com.google.firebase:firebase-database:21.0.0'
 
     // Navigation library
     def nav_version = "2.5.3"
