@@ -10,7 +10,7 @@
     android:gravity="center"
     android:padding="16dp"
     tools:context=".MainActivity"
-    android:background="@drawable/login_background">
+    android:background="@drawable/home_screen_background">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -22,14 +22,6 @@
         app:title="Alert Selector"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:padding="8dp"
-            android:text="Alert Selector"
-            android:textSize="24sp"
-            android:textColor="@color/white" />
 
     </androidx.appcompat.widget.Toolbar>
 

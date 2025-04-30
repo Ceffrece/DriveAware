@@ -19,6 +19,21 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar" >
         <!-- Primary brand color. -->
+        <item name="colorPrimary">#FF2D6123</item>
+        <item name="colorPrimaryVariant">@color/mp_color_primary_variant</item>
+        <item name="colorPrimaryDark">@color/mp_color_primary_dark</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/mp_color_secondary</item>
+        <item name="colorSecondaryVariant">@color/mp_color_secondary_variant</item>
+        <item name="colorError">@color/mp_color_error</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <!-- Customize your theme here. -->
+        <item name="backgroundTint">@null</item>
+    </style>
+
+    <style name="AppTheme1" parent="Theme.MaterialComponents.Light.NoActionBar" >
+        <!-- Primary brand color. -->
         <item name="colorPrimary">@color/mp_color_primary</item>
         <item name="colorPrimaryVariant">@color/mp_color_primary_variant</item>
         <item name="colorPrimaryDark">@color/mp_color_primary_dark</item>
@@ -42,6 +57,7 @@
     <!-- Custom style for the buttons -->
     <style name="CustomButton">
         <item name="android:background">@drawable/button_background</item> <!-- Custom background for opacity and border -->
+        <item name="android:backgroundTint">#AA50BC3C</item> <!-- Primary color for the button -->
         <item name="android:layout_width">0dp</item> <!-- Ensure they take equal space -->
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_rowWeight">1</item> <!-- Button fills grid cell equally -->
@@ -51,6 +67,6 @@
         <item name="android:padding">16dp</item> <!-- Padding inside button -->
         <item name="android:layout_margin">8dp</item> <!-- Margin around button -->
         <item name="android:drawablePadding">8dp</item> <!-- Space between image and text -->
-        <item name="android:elevation">4dp</item> <!-- Elevation for shadow effect -->
+        <item name="android:elevation">6dp</item> <!-- Elevation for shadow effect -->
     </style>
 </resources>
