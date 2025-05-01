@@ -18,3 +18,11 @@ data class DriveData(
     val totalDistractedDistance: Double? = null,
     val totalDistractedTime: Int? = null
 )
+
+data class PhotoData(
+    val photoUrl: String? = null,
+    val timestamp: Long? = null,
+    val date: String? = null,
+    val time: String? = null,
+    val sessionId: String? = null
+)
