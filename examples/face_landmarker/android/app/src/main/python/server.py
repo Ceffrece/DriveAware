@@ -1,20 +1,10 @@
-import socket
-import struct
-import cv2
 import requests
-import json
 
-def serverFunction(imgpath):
+def serverFunction(imagepath):
     # === Config ===
-    SERVER_IP = '172.27.82.13'  # Change to your server's IP if remote
-    PORT = 80
-    IMAGE_PATH = imgpath # Path to a test image
-
-    # === Read and encode image ===
-    img = cv2.imread(IMAGE_PATH)
-    _, img_encoded = cv2.imencode('.jpg', img)
-    img_bytes = img_encoded.tobytes()
-    img_len = len(img_bytes)
+    SERVER_IP = '172.27.82.13'  # Your Flask server's IP
+    PORT = 80                   # Flask server port (not 5001 anymore)
+    IMAGE_PATH = imagepath  # Path to a test image
 
     # === Send image ===
     url = f'http://{SERVER_IP}:{PORT}/predict'

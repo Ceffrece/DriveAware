@@ -151,7 +151,7 @@ class DriveActivity : ComponentActivity() {
         // Start a coroutine to capture images every 3 seconds
         lifecycleScope.launch(Dispatchers.IO) {
             while (isCapturing) {
-                //captureImage()
+                captureImage()
                 delay(3000) // Delay for 3 seconds before taking another picture
             }
         }
