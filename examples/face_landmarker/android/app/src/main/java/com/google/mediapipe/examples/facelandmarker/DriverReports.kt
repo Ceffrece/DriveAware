@@ -1,36 +1,22 @@
 package com.google.mediapipe.examples.facelandmarker
 
-import android.R
-import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.recyclerview.widget.GridLayoutManager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.example.distracted_driver_detection.databinding.ActivityDriverReportsBinding
 import com.google.firebase.database.*
-import com.google.firebase.storage.FirebaseStorage
-
+import com.google.mediapipe.examples.facelandmarker.databinding.ActivityDriverReportsBinding
 
 class DriverReports : AppCompatActivity() {
     private lateinit var binding: ActivityDriverReportsBinding
     private lateinit var firebaseDatabase: FirebaseDatabase
     private lateinit var databaseReference: DatabaseReference
-    private lateinit var photoAdapter: PhotoAdapter
-    private val photos = mutableListOf<PhotoData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         binding = ActivityDriverReportsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -47,43 +33,41 @@ class DriverReports : AppCompatActivity() {
             return
         }
 
-        // Initialize database reference for drive sessions
-        databaseReference = firebaseDatabase.reference
-            .child("users")
-            .child(userId)
-            .child("driveSessions")
+        // Check if this is a shared report
+        val isSharedReport = intent.getBooleanExtra("isSharedReport", false)
+        val sharedUserId = intent.getStringExtra("sharedUserId")
 
-        // Setup RecyclerView with GridLayoutManager
-        binding.recyclerViewPhotos.layoutManager = GridLayoutManager(this, 2)
-        photoAdapter = PhotoAdapter(photos) { photo ->
-            showPhotoDialog(photo)
+        // Update database reference based on whether it's a shared report
+        databaseReference = if (isSharedReport && sharedUserId != null) {
+            firebaseDatabase.reference
+                .child("users")
+                .child(userId)
+                .child("sharedReports")
+                .child(sharedUserId)
+        } else {
+            firebaseDatabase.reference
+                .child("users")
+                .child(userId)
+                .child("driveSessions")
         }
-        binding.recyclerViewPhotos.adapter = photoAdapter
 
         // Set up Back button
         binding.btnBack.setOnClickListener {
             finish()
         }
 
-        // Get sessionId from intent
-        val sessionId = intent.getStringExtra("sessionId")
-        Log.d("DriverReports", "Received sessionId: $sessionId")
-
-        if (sessionId != null) {
-            // Load drive data and photos for specific session
-            loadDriveData(sessionId)
-            loadPhotosForSession(sessionId, userId)
-        } else {
-            // Load latest drive data
-            loadLatestDriveData()
-            binding.textViewPhotosTitle.visibility = View.GONE
-            binding.recyclerViewPhotos.visibility = View.GONE
-        }
-
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        // Retrieve drive data
+        val sessionId = intent.getStringExtra("sessionId")
+        if (sessionId != null) {
+            loadDriveData(sessionId)
+        } else {
+            loadLatestDriveData()
         }
     }
 
@@ -147,62 +131,6 @@ class DriverReports : AppCompatActivity() {
             Toast.makeText(this, "Failed to load photos", Toast.LENGTH_SHORT).show()
         }
     }
-
-    private fun updatePhotosList(photos: List<PhotoData>) {
-        if (photos.isEmpty()) {
-            binding.textViewPhotosTitle.visibility = View.GONE
-            binding.recyclerViewPhotos.visibility = View.GONE
-            return
-        }
-
-        binding.textViewPhotosTitle.visibility = View.VISIBLE
-        binding.recyclerViewPhotos.visibility = View.VISIBLE
-
-        val photoAdapter = PhotoAdapter(photos) { photo ->
-            showPhotoDialog(photo)
-        }
-        binding.recyclerViewPhotos.adapter = photoAdapter
-    }
-
-    private fun showPhotoDialog(photo: PhotoData) {
-        val dialog = Dialog(this)
-        val imageView = ImageView(this).apply {
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-            adjustViewBounds = true
-            scaleType = ImageView.ScaleType.FIT_CENTER
-            setImageResource(android.R.drawable.ic_menu_gallery)
-        }
-
-        dialog.setContentView(imageView)
-        dialog.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-
-        // Load full-size image from Firebase Storage
-        photo.photoUrl?.let { gsUrl ->
-            if (gsUrl.startsWith("gs://")) {
-                val storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(gsUrl)
-                storageRef.downloadUrl.addOnSuccessListener { uri ->
-                    Glide.with(this)
-                        .load(uri)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .placeholder(android.R.drawable.ic_menu_gallery)
-                        .error(android.R.drawable.ic_menu_gallery)
-                        .into(imageView)
-                }.addOnFailureListener { e ->
-                    Log.e("DriverReports", "Error loading full-size image: ${e.message}")
-                }
-            }
-        }
-
-        imageView.setOnClickListener { dialog.dismiss() }
-        dialog.show()
-    }
-    // ... rest of your existing code (loadDriveData, loadLatestDriveData, updateUIWithDriveData, showNoDataMessage) ...
 
     private fun loadDriveData(sessionId: String) {
         Log.d("DriverReports", "Loading drive data for session: $sessionId")
@@ -353,6 +281,4 @@ class DriverReports : AppCompatActivity() {
             textViewDate.text = "Date: --/--/----"
         }
     }
-
-
 }
