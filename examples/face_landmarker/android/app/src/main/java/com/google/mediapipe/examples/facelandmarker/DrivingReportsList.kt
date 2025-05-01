@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.mediapipe.examples.facelandmarker.databinding.ActivityDrivingReportsListBinding
+import com.example.distracted_driver_detection.databinding.ActivityDrivingReportsListBinding
 
 class DrivingReportsList : AppCompatActivity() {
     private lateinit var binding: ActivityDrivingReportsListBinding

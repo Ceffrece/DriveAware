@@ -8,7 +8,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.*
-import com.google.mediapipe.examples.facelandmarker.databinding.ActivitySharedReportsListBinding
+import com.example.distracted_driver_detection.databinding.ActivitySharedReportsListBinding
+
 
 
 class SharedReportsList : AppCompatActivity() {
