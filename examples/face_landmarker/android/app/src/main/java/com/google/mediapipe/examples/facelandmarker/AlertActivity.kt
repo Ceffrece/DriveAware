@@ -13,6 +13,7 @@ import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import android.Manifest
+import androidx.appcompat.widget.Toolbar
 
 class AlertActivity : AppCompatActivity() {
 
@@ -29,11 +30,11 @@ class AlertActivity : AppCompatActivity() {
         mediaPlayerLevel2 = MediaPlayer.create(this, R.raw.alert_level2)
         mediaPlayerLevel3 = MediaPlayer.create(this, R.raw.alert_level3)
 
-        // Set up Back button
-        val btnBack: Button = findViewById(R.id.btnBack)
-        btnBack.setOnClickListener {
-            startActivity(Intent(this, HomePageActivity::class.java))
-        }
+        // Toolbar stuff
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
         // Find buttons by ID
         val btnAlertLevel1: Button = findViewById(R.id.btnAlertLevel1)

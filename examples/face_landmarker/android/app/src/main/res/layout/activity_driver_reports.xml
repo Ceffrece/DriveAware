@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".DriverReports"
-    android:background="@drawable/main_background">
+    android:background="@drawable/loginbkg">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,6 +20,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="BACK" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="13dp"/>
 
         <TextView
             android:id="@+id/textViewTitle"
@@ -29,7 +32,7 @@
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_marginBottom="16dp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/textViewDate"
@@ -38,7 +41,8 @@
             android:text="Date: --/--/----"
             android:textSize="18sp"
             android:layout_marginBottom="8dp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/textViewDistractedDrivingPercentage"
@@ -47,7 +51,8 @@
             android:text="Distracted Driving Percentage: 0%"
             android:textSize="18sp"
             android:layout_marginBottom="8dp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/textViewTotalDistractedTime"
@@ -56,7 +61,8 @@
             android:text="Total Distracted Time: 0 seconds"
             android:textSize="18sp"
             android:layout_marginBottom="8dp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/textViewTotalDistractedDistance"
@@ -65,7 +71,8 @@
             android:text="Total Distracted Distance: 0 meters"
             android:textSize="18sp"
             android:layout_marginBottom="8dp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/textViewStartTime"
@@ -74,7 +81,8 @@
             android:text="Start Time: 0:00:00"
             android:textSize="18sp"
             android:layout_marginBottom="8dp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/textViewEndTime"
@@ -83,7 +91,8 @@
             android:text="End Time: 0:00:00"
             android:textSize="18sp"
             android:layout_marginBottom="8dp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 </ScrollView>

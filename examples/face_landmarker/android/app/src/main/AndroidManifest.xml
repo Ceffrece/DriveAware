@@ -23,9 +23,6 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
         <activity
-            android:name=".SplashScreen"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
 

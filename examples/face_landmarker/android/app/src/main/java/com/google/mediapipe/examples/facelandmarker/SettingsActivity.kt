@@ -43,12 +43,6 @@ class SettingsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
-        // Set up Back button
-        val backbtn: Button = findViewById(R.id.btnBack)
-        backbtn.setOnClickListener {
-            finish()
-        }
-
         // Existing switches setup
         setupExistingSwitches()
 
@@ -233,23 +227,6 @@ class SettingsActivity : AppCompatActivity() {
         switchNotifications.isChecked = sharedPreferences.getBoolean("notifications", true)
         switchNotifications.setOnCheckedChangeListener { _: CompoundButton, isChecked: Boolean ->
             sharedPreferences.edit().putBoolean("notifications", isChecked).apply()
-        }
-
-        // Dark mode switch
-        val switchDarkMode = findViewById<Switch>(R.id.switchDarkMode)
-        val isDarkMode = sharedPreferences.getBoolean("dark_mode", false)
-        switchDarkMode.isChecked = isDarkMode
-        switchDarkMode.setOnCheckedChangeListener { _, isChecked ->
-            if (!isChangingTheme) {
-                isChangingTheme = true
-                if (isChecked) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                }
-                sharedPreferences.edit().putBoolean("dark_mode", isChecked).apply()
-                isChangingTheme = false
-            }
         }
     }
     private fun showShareDialog() {

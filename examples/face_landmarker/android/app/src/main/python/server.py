@@ -1,11 +1,12 @@
 import socket
 import struct
 import cv2
+import requests
 
 def serverFunction(imgpath):
     # === Config ===
-    SERVER_IP = '10.111.118.237'  # Change to your server's IP if remote
-    PORT = 5001
+    SERVER_IP = '172.27.82.13'  # Change to your server's IP if remote
+    PORT = 80
     IMAGE_PATH = imgpath # Path to a test image
 
     # === Read and encode image ===
@@ -14,16 +15,15 @@ def serverFunction(imgpath):
     img_bytes = img_encoded.tobytes()
     img_len = len(img_bytes)
 
-    # === Connect to server ===
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.connect((SERVER_IP, PORT))
+    # === Send image ===
+    url = f'http://{SERVER_IP}:{PORT}/predict'
 
-        # Send 4-byte image length
-        s.sendall(struct.pack('!I', img_len))
+    with open(IMAGE_PATH, 'rb') as img_file:
+        files = {'image': img_file}
+        response = requests.post(url, files=files)
 
-        # Send image data
-        s.sendall(img_bytes)
-
-        # Receive and print response
-        response = s.recv(1024).decode('utf-8')
-        return response
+    # === Print server response ===
+    if response.ok:
+        print("Server response:", response.json())
+    else:
+        print("Error:", response.status_code, response.text)

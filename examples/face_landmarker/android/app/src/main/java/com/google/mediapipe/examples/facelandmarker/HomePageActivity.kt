@@ -49,7 +49,7 @@ class HomePageActivity : AppCompatActivity() {
         val btnDrive: Button = findViewById(R.id.btnDrive)
         btnDrive.setOnClickListener {
             if (checkLoginRequired()) {
-                val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, DriveActivity::class.java)
                 startActivity(intent)
             }
         }
@@ -74,12 +74,12 @@ class HomePageActivity : AppCompatActivity() {
 
         // Alerts button
         val btnAlerts = findViewById<Button>(R.id.alertButton)
-        /*btnAlerts.setOnClickListener {
+        btnAlerts.setOnClickListener {
             if (checkLoginRequired()) {
                 val intent = Intent(this, AlertActivity::class.java)
                 startActivity(intent)
             }
-        }*/
+        }
     }
 
     private fun checkLoginRequired(): Boolean {
