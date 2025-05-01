@@ -184,10 +184,6 @@ class DriveActivity : ComponentActivity() {
             object : ImageCapture.OnImageSavedCallback {
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                     Log.d("DriveActivity", "Image saved to ${photoFile.absolutePath}")
-                    // Display a Toast message indicating that a picture was taken
-                    runOnUiThread {
-                        Toast.makeText(this@DriveActivity, "Picture taken!", Toast.LENGTH_SHORT).show()
-                    }
                     //Get python instance
                     val python = Python.getInstance()
                     //Get python file
@@ -204,14 +200,26 @@ class DriveActivity : ComponentActivity() {
                         }*/
                        var resultString = result.toString()
                        if(resultString.equals("Focused")){
+                           // Display a Toast message indicating that the person was focused
+                           runOnUiThread {
+                               Toast.makeText(this@DriveActivity, "Focused", Toast.LENGTH_SHORT).show()
+                           }
                            processImage(0)
                        } else {
+                           // Display a Toast message indicating that the user was distracted
+                           runOnUiThread {
+                               Toast.makeText(this@DriveActivity, "Distracted", Toast.LENGTH_SHORT).show()
+                           }
                            processImage(1)
                        }
                     }
                     else{
                         //No left eye found, distracted
                         distractedCount += 1
+                        // Display a Toast message indicating that the user was distracted
+                        runOnUiThread {
+                            Toast.makeText(this@DriveActivity, "Distracted", Toast.LENGTH_SHORT).show()
+                        }
                         if(distractedCount >= 3){
                             alertCount += 1
                             playAlert(alertCount)

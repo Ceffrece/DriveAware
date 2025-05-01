@@ -2,6 +2,7 @@ import socket
 import struct
 import cv2
 import requests
+import json
 
 def serverFunction(imgpath):
     # === Config ===
@@ -25,5 +26,6 @@ def serverFunction(imgpath):
     # === Print server response ===
     if response.ok:
         print("Server response:", response.json())
+        return response.json().get("label")
     else:
         print("Error:", response.status_code, response.text)
