@@ -3,13 +3,10 @@ package com.google.mediapipe.examples.facelandmarker
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.util.Size
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -32,18 +29,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform
-import com.google.mediapipe.examples.facelandmarker.ml.LiteModel
-import org.tensorflow.lite.DataType
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import org.tensorflow.lite.support.image.ImageProcessor
-import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.image.ops.ResizeOp
-import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
-import java.io.FileNotFoundException
-import java.io.FileOutputStream
-import java.io.*
-import java.net.Socket
-import java.io.ByteArrayOutputStream
-import java.nio.ByteBuffer
+import java.util.Calendar
 
 class DriveActivity : ComponentActivity() {
 
@@ -58,6 +49,10 @@ class DriveActivity : ComponentActivity() {
     var distractedCount = 0
     var alertCount = 0
     var focusedCount = 0
+    var distractedTotal = 0
+    var focusedTotal = 0
+    var startTime = Calendar.getInstance().time
+    var endTime = Calendar.getInstance().time
     lateinit var imageProcessor : ImageProcessor
 
     private var isCapturing = false
@@ -151,14 +146,12 @@ class DriveActivity : ComponentActivity() {
         isCapturing = true
         startStopButton.text = "Stop Drive"
 
-        //Start the service that will continue things in the background
-        //val serviceIntent = Intent(this, CameraService::class.java)
-        //startService(serviceIntent)
+        startTime = Calendar.getInstance().time
 
         // Start a coroutine to capture images every 3 seconds
         lifecycleScope.launch(Dispatchers.IO) {
             while (isCapturing) {
-                captureImage()
+                //captureImage()
                 delay(3000) // Delay for 3 seconds before taking another picture
             }
         }
@@ -168,9 +161,18 @@ class DriveActivity : ComponentActivity() {
         isCapturing = false
         startStopButton.text = "Start Drive"
 
-        //Stop the background service
-        //val serviceIntent = Intent(this, CameraService::class.java)
-        //stopService(serviceIntent)
+        endTime = Calendar.getInstance().time
+
+        //Save to database as a new drive
+        val driveData = DriveData(
+            sessionId = "-" + System.currentTimeMillis().toString(),
+            date = SimpleDateFormat("yyyy-MM-dd").format(startTime),
+            distractedDrivingPercentage = (distractedTotal.toDouble() / (distractedTotal + focusedTotal).toDouble()) * 100,
+            startTime = SimpleDateFormat("HH:mm").format(startTime),
+            endTime = SimpleDateFormat("HH:mm").format(endTime),
+            totalDistractedTime = distractedTotal * 3
+            )
+        saveDriveSession(driveData)
     }
 
     private fun captureImage() {
@@ -216,6 +218,7 @@ class DriveActivity : ComponentActivity() {
                     else{
                         //No left eye found, distracted
                         distractedCount += 1
+                        distractedTotal += 1
                         // Display a Toast message indicating that the user was distracted
                         runOnUiThread {
                             Toast.makeText(this@DriveActivity, "Distracted", Toast.LENGTH_SHORT).show()
@@ -278,12 +281,14 @@ class DriveActivity : ComponentActivity() {
         if(distracted == 0){
             distractedCount = 0
             focusedCount += 1
+            focusedTotal += 1
             if(focusedCount >= 6){
                 alertCount = 0
                 focusedCount = 0
             }
         } else {
             distractedCount += 1
+            distractedTotal += 1
             if(distractedCount >= 3){
                 alertCount += 1
                 playAlert(alertCount)
@@ -333,5 +338,32 @@ class DriveActivity : ComponentActivity() {
             .build()
 
         workManager.enqueue(alertWork)
+    }
+    fun saveDriveSession(driveSession: DriveData) {
+        // Get the current user's UID from Firebase Authentication (assuming you're using Firebase Authentication)
+        val sharedPref = getSharedPreferences("user_prefs", MODE_PRIVATE)
+        val userId = sharedPref.getString("current_user_id", null)
+
+        // Ensure the user is authenticated before proceeding
+        if (userId == null) {
+            // Handle the case where the user is not authenticated
+            println("User not authenticated!")
+            return
+        }
+
+        // Get the Firebase Realtime Database reference
+        val database: DatabaseReference = FirebaseDatabase.getInstance().reference
+
+        // Use the session ID or create a new unique ID (Firebase will auto-generate one if needed)
+        val sessionRef = database.child("users").child(userId).child("driveSessions").child(driveSession.sessionId ?: "")
+
+        // Save the drive session data to Firebase
+        sessionRef.setValue(driveSession)
+            .addOnSuccessListener {
+                println("Drive session saved successfully!")
+            }
+            .addOnFailureListener { exception ->
+                println("Error saving drive session: ${exception.message}")
+            }
     }
 }
