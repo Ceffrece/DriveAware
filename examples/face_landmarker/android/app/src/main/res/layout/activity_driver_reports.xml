@@ -65,16 +65,6 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/textViewTotalDistractedDistance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Total Distracted Distance: 0 meters"
-            android:textSize="18sp"
-            android:layout_marginBottom="8dp"
-            android:textColor="@color/black"
-            android:textStyle="bold"/>
-
-        <TextView
             android:id="@+id/textViewStartTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -158,15 +158,6 @@ class DriverReports : AppCompatActivity() {
             textViewTotalDistractedTime.text =
                 "Total Distracted Time: ${minutes}m ${seconds}s"
 
-            // Convert distance to kilometers if over 1000 meters
-            val distance = driveData.totalDistractedDistance ?: 0.0
-            val distanceText = if (distance >= 1000) {
-                String.format("%.2f km", distance / 1000)
-            } else {
-                String.format("%.0f m", distance)
-            }
-            textViewTotalDistractedDistance.text = "Total Distracted Distance: $distanceText"
-
             // Convert start time from 24-hour to 12-hour format
             val startTime = driveData.startTime?.let { time ->
                 try {
@@ -214,7 +205,6 @@ class DriverReports : AppCompatActivity() {
         with(binding) {
             textViewDistractedDrivingPercentage.text = "Distracted Driving Percentage: 0%"
             textViewTotalDistractedTime.text = "Total Distracted Time: 0m 0s"
-            textViewTotalDistractedDistance.text = "Total Distracted Distance: 0 m"
             textViewStartTime.text = "Start Time: --:--"
             textViewEndTime.text = "End Time: --:--"
             textViewDate.text = "Date: --/--/----"
