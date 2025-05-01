@@ -77,6 +77,18 @@
             android:textColor="@color/white"/>
 
         <TextView
+            android:id="@+id/textViewPhotosTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="Distracted Driving Photos"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="visible" />
+
+        <TextView
             android:id="@+id/textViewEndTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
