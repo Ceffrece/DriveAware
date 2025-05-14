@@ -83,7 +83,6 @@ class HomePageActivity : AppCompatActivity() {
     }
 
     private fun checkLoginRequired(): Boolean {
-        return true
         val sharedPref = getSharedPreferences("user_prefs", MODE_PRIVATE)
         val userId = sharedPref.getString("current_user_id", null)
 

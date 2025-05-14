@@ -152,7 +152,7 @@ class DriveActivity : ComponentActivity() {
         lifecycleScope.launch(Dispatchers.IO) {
             while (isCapturing) {
                 captureImage()
-                delay(3000) // Delay for 3 seconds before taking another picture
+                delay(1000) // Delay for 1 second before taking another picture
             }
         }
     }
